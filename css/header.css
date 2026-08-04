@@ -1,0 +1,23 @@
+/* Header */
+/*  Empezando Estilos para el encabezado del sitio web */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--color-fondo);
+  padding: var(--espacio-pequeno) var(--espacio-mediano);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-left,
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-pequeno);
+}
+
+.header-logo img {
+  height: 60px
+}

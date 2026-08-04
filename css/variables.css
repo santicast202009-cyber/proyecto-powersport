@@ -1,0 +1,17 @@
+/* Variables globales:Colores, tipografia y espaciados (power sport) */
+:root {
+  --color-fondo: #0d0d0d;
+  --fondo-tarjeta: #1a1a1a;
+  --color-principal: #e63946;
+  --color-secundario: #ff6b35;
+  --gris: #4a4a4a;
+  --texto-claro: #f2f2f2;
+  --texto-oscuro: #1a1a1a;
+  --fuente-principal: 'Segoe UI', Arial, sans-serif;
+  --espacio-pequeno: 1rem;
+  --espacio-mediano: 2rem;
+  --espacio-grande: 4rem;
+  --radio-bordes: 10px;
+
+
+}

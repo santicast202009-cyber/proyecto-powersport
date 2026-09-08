@@ -5,7 +5,7 @@
 ================================ */
 
 
-/* ---------- VARIABLES ---------- */
+/* Variables de referencia  */
 
 :root {
 
@@ -22,6 +22,8 @@
 
     --fuente: Arial, Helvetica, sans-serif;
 
+    
+
 }
 
 
@@ -33,6 +35,15 @@
     box-sizing: border-box;
 }
 
+.icon {
+
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+
+}
 
 html {
     scroll-behavior: smooth;
@@ -42,11 +53,8 @@ html {
 body {
 
     font-family: var(--fuente);
-
     background-color: var(--negro);
-
     color: var(--blanco);
-
     line-height: 1.6;
 
 }
@@ -64,7 +72,6 @@ img {
 a {
 
     text-decoration: none;
-
     color: inherit;
 
 }
@@ -82,25 +89,15 @@ button {
 .header {
 
     width: 100%;
-
     height: 70px;
-
     padding: 0 18px;
-
     display: flex;
-
     align-items: center;
-
     justify-content: space-between;
-
     background-color: rgba(11, 11, 11, 0.96);
-
     border-bottom: 1px solid #292929;
-
     position: sticky;
-
     top: 0;
-
     z-index: 1000;
 
 }
@@ -108,9 +105,11 @@ button {
 
 .logo img {
 
-    width: 100px;
+    height: 54px;
+    width: 54px;
 
-    height: auto;
+    border-radius: 70px;
+    object-fit: cover;
 
 }
 
@@ -119,13 +118,9 @@ button {
 .cart {
 
     width: 42px;
-
     height: 42px;
-
     display: flex;
-
     align-items: center;
-
     justify-content: center;
 
 }
@@ -134,24 +129,11 @@ button {
 .menu-button {
 
     background: transparent;
-
     border: none;
-
     color: var(--blanco);
-
-    font-size: 24px;
-
     cursor: pointer;
 
 }
-
-
-.cart {
-
-    font-size: 22px;
-
-}
-
 
 .nav {
 
@@ -160,22 +142,16 @@ button {
 }
 
 
-/* ---------- HERO ---------- */
+/* --Hero-- */
 
 .hero {
 
     min-height: 600px;
-
     padding: 80px 20px;
-
     display: flex;
-
     align-items: center;
-
     position: relative;
-
     overflow: hidden;
-
     background:
 
         linear-gradient(
@@ -195,21 +171,13 @@ button {
 .hero::after {
 
     content: "";
-
     position: absolute;
-
     width: 220px;
-
     height: 220px;
-
     background: var(--rojo);
-
     filter: blur(100px);
-
     opacity: 0.22;
-
     right: -100px;
-
     bottom: -100px;
 
 }
@@ -241,23 +209,17 @@ button {
 
 .hero h1 {
 
-    font-size: 42px;
+    font-size: 70px;
 
     line-height: 1.05;
-
-    font-weight: 900;
-
 }
-
 
 .hero h1 span {
 
     display: block;
 
     color: var(--rojo);
-
 }
-
 
 .hero-text {
 
@@ -268,9 +230,7 @@ button {
     font-size: 17px;
 
     max-width: 450px;
-
 }
-
 
 .button {
 
@@ -287,20 +247,17 @@ button {
     text-transform: uppercase;
 
     transition: 0.3s;
-
 }
-
 
 .button:hover {
 
     background-color: var(--rojo-claro);
 
     transform: translateY(-2px);
-
 }
 
 
-/* ---------- TÍTULOS ---------- */
+/* ---Seccion de Titulos-- */
 
 .section-title {
 
@@ -327,20 +284,21 @@ button {
 
 
 .section-title h2 {
-
+   
+        
     font-size: 30px;
+    letter-spacing: 1px;
 
 }
 
 
-/* ---------- CATEGORÍAS ---------- */
+/* --Categorias-- */
 
 .categories {
 
     padding: 70px 20px;
 
 }
-
 
 .category-container {
 
@@ -349,9 +307,7 @@ button {
     grid-template-columns: 1fr;
 
     gap: 15px;
-
 }
-
 
 .category-card {
 
@@ -364,9 +320,7 @@ button {
     border-radius: 10px;
 
     transition: 0.3s;
-
 }
-
 
 .category-card:hover {
 
@@ -379,7 +333,7 @@ button {
 
 .category-icon {
 
-    font-size: 32px;
+    color: var(--rojo);
 
     margin-bottom: 10px;
 
@@ -387,9 +341,8 @@ button {
 
 
 .category-card h3 {
-
+    
     font-size: 22px;
-
     margin-bottom: 8px;
 
 }
@@ -402,8 +355,7 @@ button {
 }
 
 
-/* ---------- PRODUCTOS ---------- */
-
+/* Productos */
 .products {
 
     padding: 70px 20px;
@@ -422,12 +374,10 @@ button {
 
 .category-title {
 
+    
     font-size: 25px;
-
     margin-bottom: 25px;
-
     padding-left: 12px;
-
     border-left: 4px solid var(--rojo);
 
 }
@@ -512,11 +462,8 @@ button {
 .brand {
 
     color: var(--rojo);
-
     font-size: 13px;
-
     font-weight: bold;
-
     text-transform: uppercase;
 
 }
@@ -524,8 +471,8 @@ button {
 
 .product-info h3 {
 
-    font-size: 21px;
 
+    font-size: 21px;
     margin: 6px 0;
 
 }
@@ -534,9 +481,7 @@ button {
 .description {
 
     color: var(--gris);
-
     font-size: 14px;
-
     min-height: 65px;
 
 }
@@ -545,9 +490,7 @@ button {
 .price {
 
     font-size: 23px;
-
     font-weight: bold;
-
     margin: 15px 0;
 
 }
@@ -556,21 +499,13 @@ button {
 .buy-button {
 
     width: 100%;
-
     padding: 12px;
-
     border: none;
-
     border-radius: 5px;
-
     background-color: var(--rojo);
-
     color: var(--blanco);
-
     font-weight: bold;
-
     cursor: pointer;
-
     transition: 0.3s;
 
 }
@@ -612,9 +547,9 @@ button {
 }
 
 
-.benefit span {
+.benefit .icon {
 
-    font-size: 30px;
+    color: var(--rojo);
 
 }
 

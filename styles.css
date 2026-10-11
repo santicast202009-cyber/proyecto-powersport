@@ -859,3 +859,20 @@ footer > p {
     }
 
 }
+
+/* ---------- INTEGRACIÓN CON API Y ACCESIBILIDAD ---------- */
+.logo-text { display: block; font-size: 1.1rem; font-weight: 900; line-height: 1; }
+.logo-text span { display: block; color: var(--rojo); }
+.api-status { color: var(--gris); text-align: center; margin: -18px 0 32px; }
+.api-status.error { color: #ff807a; }
+.product-image { position: relative; }
+.product-image img { max-width: 100%; }
+.product-image .image-placeholder { color: var(--gris); font-size: .9rem; text-align: center; }
+.product-card .stock { color: #b7d9b8; font-size: .85rem; margin-top: 5px; }
+.product-card .buy-button { display: inline-block; text-align: center; }
+.menu-button:focus-visible, a:focus-visible, button:focus-visible { outline: 2px solid var(--rojo-claro); outline-offset: 3px; }
+@media (max-width: 899px) {
+    .nav { display: none; position: absolute; top: 70px; left: 0; right: 0; padding: 18px 22px; background: #101010; border-bottom: 1px solid #333; flex-direction: column; gap: 16px; }
+    .nav.is-open { display: flex; }
+    .nav a { padding: 5px 0; }
+}

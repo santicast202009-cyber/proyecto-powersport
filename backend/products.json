@@ -1,0 +1,9 @@
+[
+  { "id": 1, "name": "Whey Protein Gold Standard 2 lb", "brand": "Optimum Nutrition", "description": "Proteína de suero para recuperación muscular. Sabor chocolate.", "price": 189000, "stock": 25, "category": "proteina", "image": "" },
+  { "id": 2, "name": "Iso 100 Hydrolyzed 1.6 lb", "brand": "Dymatize", "description": "Proteína aislada de rápida absorción, baja en grasa y azúcar.", "price": 215000, "stock": 12, "category": "proteina", "image": "" },
+  { "id": 3, "name": "Mass Gainer 6 lb", "brand": "MuscleTech", "description": "Fórmula alta en calorías para ganar masa muscular.", "price": 169000, "stock": 0, "category": "proteina", "image": "" },
+  { "id": 4, "name": "Creatina Monohidrato 300 g", "brand": "Universal", "description": "Creatina pura para mejorar fuerza y rendimiento.", "price": 95000, "stock": 40, "category": "creatina", "image": "" },
+  { "id": 5, "name": "Creatina Micronizada 500 g", "brand": "Optimum Nutrition", "description": "Creatina micronizada de fácil mezcla, sin sabor.", "price": 135000, "stock": 18, "category": "creatina", "image": "" },
+  { "id": 6, "name": "C4 Original Pre-Workout", "brand": "Cellucor", "description": "Energía y enfoque para entrenar con mayor intensidad.", "price": 125000, "stock": 30, "category": "preentreno", "image": "" },
+  { "id": 7, "name": "Gold Standard Pre-Workout", "brand": "Optimum Nutrition", "description": "Preentreno con cafeína y beta-alanina. Sabor frutas.", "price": 145000, "stock": 9, "category": "preentreno", "image": "" }
+]

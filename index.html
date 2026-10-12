@@ -1,646 +1,82 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <meta name="description" content="PowerSport: catálogo de suplementos deportivos, proteínas, creatinas y pre-entrenos.">
     <title>PowerSport | Suplementos deportivos</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="js/main.js" defer></script>
 </head>
-
 <body>
-
-    <!-- Encabezado principal -->
     <header class="header">
-
-        <button class="menu-button" aria-label="Abrir menú">
-            <svg class="icon" viewBox="0 0 24 24" width="24" height="24">
-                <line x1="3" y1="6" x2="21" y2="6" />
-                <line x1="3" y1="12" x2="21" y2="12" />
-                <line x1="3" y1="18" x2="21" y2="18" />
-            </svg>
-        </button>
-
-        <a href="index.html" class="logo">
-            <img src="assets/img/imagen logo-powersport.jpeg" alt="PowerSport">
+        <button class="menu-button" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="main-nav">☰</button>
+        <a href="#inicio" class="logo" aria-label="PowerSport, inicio">
+            <img src="assets/img/logo-powersport.png" alt="Logo de PowerSport" onerror="this.style.display='none'; this.parentElement.insertAdjacentHTML('beforeend','<span class='logo-text'>POWER<span>SPORT</span></span>')">
         </a>
-
-        <nav class="nav">
+        <nav class="nav" id="main-nav" aria-label="Navegación principal">
             <a href="#inicio">Inicio</a>
             <a href="#productos">Productos</a>
             <a href="#nosotros">Nosotros</a>
             <a href="#contacto">Contacto</a>
         </nav>
-
-        <a href="carrito.html" class="cart" aria-label="Carrito">
-            <svg class="icon" viewBox="0 0 24 24" width="24" height="24">
-                <circle cx="9" cy="20" r="1.3" />
-                <circle cx="18" cy="20" r="1.3" />
-                <path d="M2 3h2l2.2 11.2a2 2 0 0 0 2 1.6h8.9a2 2 0 0 0 2-1.6L21 7H6" />
-            </svg>
-        </a>
-
+        <a href="#productos" class="cart" aria-label="Ir al catálogo" title="Ver productos">🛒</a>
     </header>
 
-
     <main>
-
-        <!-- HERO -->
         <section class="hero" id="inicio">
-
             <div class="hero-content">
-
-                <p class="hero-small">
-                    POWERSPORT
-                </p>
-
-                <h1>
-                    POTENCIA TU
-                    <span>MEJOR VERSIÓN</span>
-                </h1>
-
-                <p class="hero-text">
-                    Suplementos deportivos de calidad para
-                    acompañarte en cada entrenamiento.
-                </p>
-
-                <a href="#productos" class="button">
-                    Ver productos
-                </a>
-
+                <p class="hero-small">POWERSPORT</p>
+                <h1>POTENCIA TU <span>MEJOR VERSIÓN</span></h1>
+                <p class="hero-text">Suplementos deportivos para acompañarte en cada entrenamiento.</p>
+                <a href="#productos" class="button">Ver productos</a>
             </div>
-
         </section>
 
-
-        <!-- CATEGORÍAS -->
-        <section class="categories">
-
+        <section class="categories" aria-labelledby="categories-title">
             <div class="section-title">
-
                 <p>ENCUENTRA LO QUE NECESITAS</p>
-
-                <h2>
-                    Nuestras categorías
-                </h2>
-
+                <h2 id="categories-title">Nuestras categorías</h2>
             </div>
-
-
             <div class="category-container">
-
-                <a href="#proteinas" class="category-card">
-
-
-                    <div class="category-icon">
-                        <svg class="icon" viewBox="0 0 24 24" width="34" height="34">
-                            <rect x="2" y="9" width="3" height="6" rx="1" />
-                            <rect x="19" y="9" width="3" height="6" rx="1" />
-                            <rect x="6" y="7" width="3" height="10" rx="1" />
-                            <rect x="15" y="7" width="3" height="10" rx="1" />
-                            <line x1="9" y1="12" x2="15" y2="12" />
-                        </svg>
-                    </div>
-
-                    <h3>
-                        Proteínas
-                    </h3>
-
-                    <p>
-                        Apoya tu recuperación y desarrollo muscular.
-                    </p>
-
-                </a>
-
-
-                <a href="#creatinas" class="category-card">
-
-
-                    <div class="category-icon">
-                        <svg class="icon" viewBox="0 0 24 24" width="34" height="34">
-                            <polygon points="13 2 4 14 11 14 9 22 20 9 13 9" />
-                        </svg>
-                    </div>
-
-                    <h3>
-                        Creatinas
-                    </h3>
-
-                    <p>
-                        Complementa tus entrenamientos de fuerza.
-                    </p>
-
-                </a>
-
-
-                <a href="#pre-entrenos" class="category-card">
-
-                    <div class="category-icon">
-                        <svg class="icon" viewBox="0 0 24 24" width="34" height="34">
-                            <path
-                                d="M12 2c1 3-3 4-3 8a3 3 0 0 0 6 0c0-1.5-1-2-1-3 2 1 3 3 3 5.5A5.5 5.5 0 0 1 6 12.5C6 7 12 5 12 2z" />
-                        </svg>
-                    </div>
-
-                    <h3>
-                        Pre-entrenos
-                    </h3>
-
-                    <p>
-                        Prepárate para entrenar con mayor intensidad.
-                    </p>
-
-                </a>
-
+                <a href="#proteinas" class="category-card"><div class="category-icon" aria-hidden="true">💪</div><h3>Proteínas</h3><p>Opciones para complementar tu alimentación deportiva.</p></a>
+                <a href="#creatinas" class="category-card"><div class="category-icon" aria-hidden="true">⚡</div><h3>Creatinas</h3><p>Suplementos para acompañar tus entrenamientos de fuerza.</p></a>
+                <a href="#pre-entrenos" class="category-card"><div class="category-icon" aria-hidden="true">🔥</div><h3>Pre-entrenos</h3><p>Encuentra productos para tu rutina de entrenamiento.</p></a>
             </div>
-
         </section>
 
-
-        <!-- PRODUCTOS -->
         <section class="products" id="productos">
-
-            <div class="section-title">
-
-                <p>CONOCE NUESTRO CATÁLOGO</p>
-
-                <h2>
-                    Productos destacados
-                </h2>
-
-            </div>
-
-
-            <!-- PROTEÍNAS -->
-            <div class="product-category" id="proteinas">
-
-                <h3 class="category-title">
-                    Proteínas
-                </h3>
-
-
-                <div class="product-grid">
-
-
-                    <article class="product-card">
-
-                        <div class="product-image">
-                            <img src="assets/img/productos/bipro.jpg" alt="Proteína BiPro Classic">
-                        </div>
-
-                        <div class="product-info">
-
-                            <span class="brand">
-                                BiPro
-                            </span>
-
-                            <h3>
-                                BiPro Classic
-                            </h3>
-
-                            <p class="description">
-                                Proteína de suero para complementar
-                                tu alimentación deportiva.
-                            </p>
-
-                            <p class="price">
-                                $210.000
-                            </p>
-
-                            <button class="buy-button">
-                                Ver producto
-                            </button>
-
-                        </div>
-
-                    </article>
-
-
-                    <article class="product-card">
-
-                        <div class="product-image">
-                            <img src="assets/img/productos/megaplex.jpg" alt="Proteína Megaplex Lite">
-                        </div>
-
-                        <div class="product-info">
-
-                            <span class="brand">
-                                Megaplex
-                            </span>
-
-                            <h3>
-                                Megaplex Lite
-                            </h3>
-
-                            <p class="description">
-                                Fórmula pensada para complementar
-                                tus objetivos deportivos.
-                            </p>
-
-                            <p class="price">
-                                $195.000
-                            </p>
-
-                            <button class="buy-button">
-                                Ver producto
-                            </button>
-
-                        </div>
-
-                    </article>
-
-
-                    <article class="product-card">
-
-                        <div class="product-image">
-                            <img src="assets/img/productos/nitrotech.jpg" alt="Nitro Tech Whey Gold">
-                        </div>
-
-                        <div class="product-info">
-
-                            <span class="brand">
-                                MuscleTech
-                            </span>
-
-                            <h3>
-                                Nitro-Tech Whey Gold
-                            </h3>
-
-                            <p class="description">
-                                Proteína de suero para acompañar
-                                tus objetivos de entrenamiento.
-                            </p>
-
-                            <p class="price">
-                                $245.000
-                            </p>
-
-                            <button class="buy-button">
-                                Ver producto
-                            </button>
-
-                        </div>
-
-                    </article>
-
-                </div>
-
-            </div>
-
-
-            <!-- CREATINAS -->
-            <div class="product-category" id="creatinas">
-
-                <h3 class="category-title">
-                    Creatinas
-                </h3>
-
-
-                <div class="product-grid">
-
-
-                    <article class="product-card">
-
-                        <div class="product-image">
-                            <img src="assets/img/productos/healthy-creatina.jpg" alt="Creatina Healthy Sports">
-                        </div>
-
-                        <div class="product-info">
-
-                            <span class="brand">
-                                Healthy Sports
-                            </span>
-
-                            <h3>
-                                Creatina Monohidratada
-                            </h3>
-
-                            <p class="description">
-                                Creatina monohidratada de
-                                300 gramos.
-                            </p>
-
-                            <p class="price">
-                                $125.000
-                            </p>
-
-                            <button class="buy-button">
-                                Ver producto
-                            </button>
-
-                        </div>
-
-                    </article>
-
-
-                    <article class="product-card">
-
-                        <div class="product-image">
-                            <img src="assets/img/productos/platinum-creatine.jpg" alt="MuscleTech Platinum Creatine">
-                        </div>
-
-                        <div class="product-info">
-
-                            <span class="brand">
-                                MuscleTech
-                            </span>
-
-                            <h3>
-                                Platinum 100% Creatine
-                            </h3>
-
-                            <p class="description">
-                                Creatina monohidratada
-                                micronizada.
-                            </p>
-
-                            <p class="price">
-                                $151.000
-                            </p>
-
-                            <button class="buy-button">
-                                Ver producto
-                            </button>
-
-                        </div>
-
-                    </article>
-
-
-                    <article class="product-card">
-
-                        <div class="product-image">
-                            <img src="assets/img/productos/cellucor-creatine.jpg"
-                                alt="Cellucor Cor Performance Creatine">
-                        </div>
-
-                        <div class="product-info">
-
-                            <span class="brand">
-                                Cellucor
-                            </span>
-
-                            <h3>
-                                COR-Performance Creatine
-                            </h3>
-
-                            <p class="description">
-                                Creatina monohidratada
-                                micronizada.
-                            </p>
-
-                            <p class="price">
-                                $145.000
-                            </p>
-
-                            <button class="buy-button">
-                                Ver producto
-                            </button>
-
-                        </div>
-
-                    </article>
-
-                </div>
-
-            </div>
-
-
-            <!-- PRE-ENTRENOS -->
-            <div class="product-category" id="pre-entrenos">
-
-                <h3 class="category-title">
-                    Pre-entrenos
-                </h3>
-
-
-                <div class="product-grid">
-
-
-                    <article class="product-card">
-
-                        <div class="product-image">
-                            <img src="assets/img/productos/c4.jpg" alt="Cellucor C4 Original">
-                        </div>
-
-                        <div class="product-info">
-
-                            <span class="brand">
-                                Cellucor
-                            </span>
-
-                            <h3>
-                                C4 Original
-                            </h3>
-
-                            <p class="description">
-                                Pre-entreno para acompañar
-                                tus sesiones de entrenamiento.
-                            </p>
-
-                            <p class="price">
-                                $125.000
-                            </p>
-
-                            <button class="buy-button">
-                                Ver producto
-                            </button>
-
-                        </div>
-
-                    </article>
-
-
-                    <article class="product-card">
-
-                        <div class="product-image">
-                            <img src="assets/img/productos/vaporx5.jpg" alt="MuscleTech VaporX5">
-                        </div>
-
-                        <div class="product-info">
-
-                            <span class="brand">
-                                MuscleTech
-                            </span>
-
-                            <h3>
-                                VaporX5
-                            </h3>
-
-                            <p class="description">
-                                Fórmula pre-entreno para
-                                energía y rendimiento.
-                            </p>
-
-                            <p class="price">
-                                $125.000
-                            </p>
-
-                            <button class="buy-button">
-                                Ver producto
-                            </button>
-
-                        </div>
-
-                    </article>
-
-
-                    <article class="product-card">
-
-                        <div class="product-image">
-                            <img src="assets/img/productos/no-xplode.jpg" alt="BSN NO-Xplode">
-                        </div>
-
-                        <div class="product-info">
-
-                            <span class="brand">
-                                BSN
-                            </span>
-
-                            <h3>
-                                NO-Xplode
-                            </h3>
-
-                            <p class="description">
-                                Pre-entreno diseñado para
-                                complementar tus sesiones.
-                            </p>
-
-                            <p class="price">
-                                $146.000
-                            </p>
-
-                            <button class="buy-button">
-                                Ver producto
-                            </button>
-
-                        </div>
-
-                    </article>
-
-                </div>
-
-            </div>
-
+            <div class="section-title"><p>CONOCE NUESTRO CATÁLOGO</p><h2>Productos destacados</h2></div>
+            <p class="api-status" id="api-status" role="status" aria-live="polite">Cargando productos...</p>
+            <section class="product-category" id="proteinas" aria-labelledby="proteinas-title">
+                <h3 class="category-title" id="proteinas-title">Proteínas</h3>
+                <div class="product-grid" id="protein-grid"></div>
+            </section>
+            <section class="product-category" id="creatinas" aria-labelledby="creatinas-title">
+                <h3 class="category-title" id="creatinas-title">Creatinas</h3>
+                <div class="product-grid" id="creatine-grid"></div>
+            </section>
+            <section class="product-category" id="pre-entrenos" aria-labelledby="preentrenos-title">
+                <h3 class="category-title" id="preentrenos-title">Pre-entrenos</h3>
+                <div class="product-grid" id="preworkout-grid"></div>
+            </section>
         </section>
 
-
-        <!-- NOSOTROS -->
         <section class="about" id="nosotros">
-
-            <div class="section-title">
-
-                <p>POWERSPORT</p>
-
-                <h2>
-                    ¿Por qué elegirnos?
-                </h2>
-
-            </div>
-
-
+            <div class="section-title"><p>POWERSPORT</p><h2>¿Por qué elegirnos?</h2></div>
             <div class="benefits">
-
-                <article class="benefit">
-
-                    <svg class="icon" viewBox="0 0 24 24" width="32" height="32">
-                        <circle cx="12" cy="12" r="9" />
-                        <path d="M8 12.5l2.5 2.5L16 9" />
-                    </svg>
-
-                    <h3>
-                        Productos de calidad
-                    </h3>
-
-                    <p>
-                        Seleccionamos productos de marcas
-                        reconocidas en suplementación deportiva.
-                    </p>
-
-                </article>
-
-
-                <article class="benefit">
-
-                    <svg class="icon" viewBox="0 0 24 24" width="32" height="32">
-                        <rect x="1" y="7" width="13" height="8" rx="1" />
-                        <path d="M14 10h4l3 3v2h-7z" />
-                        <circle cx="5.5" cy="17" r="1.7" />
-                        <circle cx="17.5" cy="17" r="1.7" />
-                    </svg>
-
-                    <h3>
-                        Envíos
-                    </h3>
-
-                    <p>
-                        Llevamos tus productos hasta donde
-                        los necesites.
-                    </p>
-
-                </article>
-
-
-                <article class="benefit">
-
-                    <svg class="icon" viewBox="0 0 24 24" width="32" height="32">
-                        <path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H8l-5 4z" />
-                    </svg>
-
-                    <h3>
-                        Asesoría
-                    </h3>
-
-                    <p>
-                        Te ayudamos a encontrar productos
-                        según tus objetivos.
-                    </p>
-
-                </article>
-
+                <article class="benefit"><span aria-hidden="true">✓</span><h3>Marcas reconocidas</h3><p>Un catálogo organizado por categorías para comparar opciones.</p></article>
+                <article class="benefit"><span aria-hidden="true">🚚</span><h3>Atención cercana</h3><p>Queremos ayudarte a encontrar el producto que buscas.</p></article>
+                <article class="benefit"><span aria-hidden="true">💬</span><h3>Asesoría</h3><p>Consulta la información del producto antes de comprar.</p></article>
             </div>
-
         </section>
-
     </main>
 
-
-    <!-- FOOTER -->
     <footer id="contacto">
-
-        <div class="footer-logo">
-
-            <img src="assets/img/logo-powersport.png" alt="PowerSport">
-
-        </div>
-
-        <p>
-            Potencia tu mejor versión.
-        </p>
-
-        <div class="social-links">
-
-            <a href="#">
-                Instagram
-            </a>
-
-            <a href="#">
-                Facebook
-            </a>
-
-            <a href="#">
-                WhatsApp
-            </a>
-
-        </div>
-
-        <p class="copyright">
-            © 2026 PowerSport. Todos los derechos reservados.
-        </p>
-
+        <div class="footer-logo"><img src="assets/img/logo-powersport.png" alt="Logo PowerSport" onerror="this.style.display='none'"></div>
+        <p>Potencia tu mejor versión.</p>
+        <div class="social-links"><a href="#contacto">Instagram</a><a href="#contacto">Facebook</a><a href="mailto:contacto@powersport.example">Correo</a></div>
+        <p class="copyright">© 2026 PowerSport. Proyecto académico.</p>
     </footer>
-
 </body>
-
 </html>

@@ -1,6 +1,6 @@
 // Frontend PowerSport: comportamiento del menú y consumo de la API REST.
 // En desarrollo, la API corre en http://localhost:3000.
-const API_URL = "http://localhost:3000/api/products";
+const API_URL = `${API_BASE}/api/products`;
 
 const menuButton = document.querySelector(".menu-button");
 const nav = document.querySelector("#main-nav");
@@ -106,3 +106,40 @@ async function loadProducts() {
 }
 
 loadProducts();
+
+// ---------- Mensajes de estado de los formularios ----------
+function showStatus(element, text, isError) {
+    element.textContent = text;
+    element.classList.toggle("error", isError);
+}
+
+
+// ---------- Formulario de contacto ----------
+const contactForm = document.querySelector("#contact-form");
+const contactStatus = document.querySelector("#contact-status");
+
+contactForm?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const payload = Object.fromEntries(new FormData(contactForm));
+
+    try {
+        const response = await fetch(`${API_BASE}/api/contact`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+        });
+        const data = await response.json();
+
+        if (!response.ok) {
+            showStatus(contactStatus, (data.errors || [data.error]).join(" "), true);
+            return;
+        }
+
+        showStatus(contactStatus, data.message, false);
+        contactForm.reset();
+    } catch (error) {
+        console.error(error);
+        showStatus(contactStatus, "No se pudo enviar el mensaje. Intenta de nuevo más tarde.", true);
+    }
+});

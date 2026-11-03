@@ -792,6 +792,20 @@ footer > p {
         font-size: 80px;
 
     }
+/* ---------- FORMULARIO DE CONTACTO ---------- */
+.contact { padding: 70px 20px; }
+
+.form { display: flex; flex-direction: column; gap: 10px; max-width: 520px; margin: 0 auto; }
+.form label { font-weight: bold; font-size: .95rem; }
+.form input, .form textarea {
+    width: 100%; padding: 12px; border: 1px solid var(--gris-oscuro); border-radius: 5px;
+    background-color: var(--negro-claro); color: var(--blanco); font: inherit;
+}
+.form input:focus-visible, .form textarea:focus-visible { outline: 2px solid var(--rojo-claro); outline-offset: 2px; }
+.form .buy-button { margin-top: 10px; }
+
+.form-status { max-width: 520px; margin: 18px auto 0; text-align: center; color: var(--gris); }
+.form-status.error { color: #ff807a; }
 
 }
 

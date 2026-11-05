@@ -87,6 +87,33 @@ app.get("/api/admin/messages", requireAdmin, async (req, res) => {
   }
 });
 
+app.patch("/api/admin/products/:id/stock", requireAdmin, async (req, res) => {
+  const stock = Number(req.body?.stock);
+
+  if (!mongoose.isValidObjectId(req.params.id)) {
+    return res.status(400).json({ error: "ID de producto no válido." });
+  }
+  if (!Number.isInteger(stock) || stock < 0) {
+    return res.status(400).json({ error: "El stock debe ser un número entero mayor o igual a 0." });
+  }
+
+  try {
+    const product = await Product.findByIdAndUpdate(
+      req.params.id,
+      { stock },
+      { new: true }
+    ).select("-__v");
+
+    if (!product) {
+      return res.status(404).json({ error: "Producto no encontrado." });
+    }
+    res.json(product);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "No se pudo actualizar el stock." });
+  }
+});
+
 // ---------- Arranque ----------
 async function seedIfEmpty() {
   const total = await Product.countDocuments();

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+    <title>Administración | PowerSport</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="js/config.js" defer></script>
+    <script src="js/admin.js" defer></script>
+</head>
+<body class="admin-page">
+    <header class="admin-header">
+        <a href="index.html" class="admin-back">← Volver a la tienda</a>
+        <button type="button" id="logout-button" class="admin-logout" hidden>Cerrar sesión</button>
+    </header>
+
+    <main class="admin-main">
+        <section id="login-section" aria-labelledby="login-title">
+            <div class="section-title"><p>ZONA PRIVADA</p><h1 id="login-title">Ingreso de administrador</h1></div>
+            <form class="form" id="login-form">
+                <label for="login-user">Usuario</label>
+                <input type="text" id="login-user" name="user" required autocomplete="username">
+
+                <label for="login-password">Contraseña</label>
+                <input type="password" id="login-password" name="password" required autocomplete="current-password">
+
+                <button class="buy-button" type="submit">Ingresar</button>
+            </form>
+            <p class="form-status" id="login-status" role="status" aria-live="polite"></p>
+        </section>
+
+        <section id="panel-section" hidden>
+            <div class="section-title"><p>GESTIÓN INTERNA</p><h1>Panel de administración</h1></div>
+            <p class="form-status" id="panel-status" role="status" aria-live="polite"></p>
+
+            <h2 class="admin-title">Mensajes de contacto</h2>
+            <div id="messages-list" class="admin-list"></div>
+
+            <h2 class="admin-title">Inventario</h2>
+            <div id="stock-list" class="admin-list"></div>
+        </section>
+    </main>
+</body>
+</html>

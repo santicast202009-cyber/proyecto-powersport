@@ -1,12 +1,25 @@
-// Marcador temporal de la Fase 2.
-// En la Fase 3 este archivo se reemplaza por la composición de componentes.
+import Header from "./components/Header";
+import Hero from "./components/Hero";
+import Categories from "./components/Categories";
+import Products from "./components/Products";
+import About from "./components/About";
+import ContactForm from "./components/ContactForm";
+import Footer from "./components/Footer";
+
 function App() {
   return (
-    <main>
-      <h1>PowerSport</h1>
-      <p>Frontend creado con React y Vite.</p>
-    </main>
-  )
+    <>
+      <Header />
+      <main>
+        <Hero />
+        <Categories />
+        <Products />
+        <About />
+        <ContactForm />
+      </main>
+      <Footer />
+    </>
+  );
 }
 
-export default App
+export default App;

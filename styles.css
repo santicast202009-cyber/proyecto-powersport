@@ -49,6 +49,10 @@ html {
     scroll-behavior: smooth;
 }
 
+section[id] {
+    scroll-margin-top: 90px;
+}
+
 
 body {
 
@@ -209,7 +213,7 @@ button {
 
 .hero h1 {
 
-    font-size: 70px;
+    font-size: 44px;
 
     line-height: 1.05;
 }
@@ -626,6 +630,155 @@ footer > p {
 }
 
 
+/* ---------- CONTACTO ---------- */
+
+.contact {
+
+    padding: 70px 20px;
+
+}
+
+
+.form {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 18px;
+
+    max-width: 560px;
+
+    margin: 0 auto;
+
+    padding: 24px;
+
+    background-color: var(--negro-claro);
+
+    border: 1px solid var(--gris-oscuro);
+
+    border-radius: 12px;
+
+}
+
+
+.form-row {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 18px;
+
+}
+
+
+.form-group {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+
+}
+
+
+.form label {
+
+    font-weight: bold;
+
+    font-size: 0.95rem;
+
+}
+
+
+.form input,
+.form textarea {
+
+    width: 100%;
+
+    padding: 14px 16px;
+
+    border: 1px solid var(--gris-oscuro);
+
+    border-radius: 8px;
+
+    background-color: var(--negro);
+
+    color: var(--blanco);
+
+    font: inherit;
+
+    font-size: 1rem;
+
+    transition: border-color 0.2s, box-shadow 0.2s;
+
+}
+
+
+.form input::placeholder,
+.form textarea::placeholder {
+
+    color: #6f6f6f;
+
+}
+
+
+.form input:focus,
+.form textarea:focus {
+
+    outline: none;
+
+    border-color: var(--rojo);
+
+    box-shadow: 0 0 0 3px rgba(225, 6, 0, 0.18);
+
+}
+
+
+.form textarea {
+
+    min-height: 150px;
+
+    resize: vertical;
+
+}
+
+
+.form .buy-button {
+
+    margin-top: 4px;
+
+    padding: 14px;
+
+    font-size: 1rem;
+
+}
+
+
+.form-status {
+
+    max-width: 560px;
+
+    min-height: 1.5em;
+
+    margin: 18px auto 0;
+
+    text-align: center;
+
+    color: var(--gris);
+
+}
+
+
+.form-status.error {
+
+    color: #ff807a;
+
+}
+
+
 /* =================================
    TABLET
 ================================= */
@@ -665,6 +818,29 @@ footer > p {
     .benefits {
 
         grid-template-columns: repeat(3, 1fr);
+
+    }
+
+
+    .contact {
+
+        padding: 90px 40px;
+
+    }
+
+
+    .form {
+
+        padding: 32px;
+
+    }
+
+
+    .form-row {
+
+        display: grid;
+
+        grid-template-columns: 1fr 1fr;
 
     }
 
@@ -749,7 +925,8 @@ footer > p {
 
     .categories,
     .products,
-    .about {
+    .about,
+    .contact {
 
         padding-left: 8%;
 
@@ -817,20 +994,6 @@ footer > p {
         font-size: 80px;
 
     }
-/* ---------- FORMULARIO DE CONTACTO ---------- */
-.contact { padding: 70px 20px; }
-
-.form { display: flex; flex-direction: column; gap: 10px; max-width: 520px; margin: 0 auto; }
-.form label { font-weight: bold; font-size: .95rem; }
-.form input, .form textarea {
-    width: 100%; padding: 12px; border: 1px solid var(--gris-oscuro); border-radius: 5px;
-    background-color: var(--negro-claro); color: var(--blanco); font: inherit;
-}
-.form input:focus-visible, .form textarea:focus-visible { outline: 2px solid var(--rojo-claro); outline-offset: 2px; }
-.form .buy-button { margin-top: 10px; }
-
-.form-status { max-width: 520px; margin: 18px auto 0; text-align: center; color: var(--gris); }
-.form-status.error { color: #ff807a; }
 
 }
 

@@ -20,7 +20,12 @@ if (!JWT_SECRET || !ADMIN_USER || !ADMIN_PASSWORD) {
   process.exit(1);
 }
 
-app.use(cors());
+const allowedOrigins = (process.env.CORS_ORIGIN || "http://localhost:5173,http://localhost:5500")
+  .split(",")
+  .map((origin) => origin.trim())
+  .filter(Boolean);
+
+app.use(cors({ origin: allowedOrigins }));
 app.use(express.json());
 
 // ---------- Productos ----------

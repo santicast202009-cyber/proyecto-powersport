@@ -2,6 +2,25 @@
 
 Registro de diferencias, decisiones y problemas detectados durante la migración a React.
 
+## Tabla general: antes (vanilla) → ahora (React)
+
+| Antes (vanilla) | Ahora (React) | Qué cambió |
+|---|---|---|
+| `index.html` | `frontend/index.html` + `src/App.jsx` | El HTML se dividió en componentes dentro de `src/components/`. |
+| `admin.html` | `frontend/admin.html` + `src/admin-main.jsx` | El admin es una segunda página de Vite, sin React Router. |
+| `styles.css` | `frontend/src/index.css` | Se reutilizó el CSS; solo cambiaron las rutas de imágenes a `/img/...`. |
+| `js/config.js` | `frontend/src/api.js` + `VITE_API_URL` | La URL de la API ya no está fija en el código. |
+| `js/main.js` — menú móvil | `Header.jsx` | El menú usa `useState` y eventos `onClick`. |
+| `js/main.js` — tarjetas | `Products.jsx` + `ProductCard.jsx` | Los productos se cargan con `useEffect` y se pintan con `.map()`. |
+| `js/main.js` — contacto | `ContactForm.jsx` | Formulario controlado que envía los datos a la API. |
+| `js/admin.js` — login | `AdminApp.jsx` + `AdminLogin.jsx` | Login con token guardado en `sessionStorage`. |
+| `js/admin.js` — panel | `AdminPanel.jsx` | Carga mensajes y productos con `useEffect`. |
+| `js/admin.js` — mensajes | `MessageList.jsx` | Los mensajes se pintan con `.map()` y una `key` real. |
+| `js/admin.js` — stock | `StockList.jsx` + `StockItem.jsx` | Input controlado y guardado con `PATCH`. |
+| `assets/img/...` | `frontend/public/img/...` | Las imágenes públicas se sirven desde `/img/...`. |
+| `document.querySelector`, `innerHTML`, `addEventListener` | JSX, `useState`, `onClick`, `onSubmit` | Se eliminó la manipulación directa del DOM. |
+| `fetch` repartidos por el código | `src/api.js` | Todas las llamadas a la API están en un solo archivo. |
+
 ## Fase 3: componentes de la página
 
 - **Imagen de fondo del hero:** `frontend/src/index.css` referencia `/img/hero.jpg`, pero ese archivo no existe en el repositorio. Tampoco existía en la versión original, que apuntaba a `assets/img/hero.jpg`. El sitio muestra el degradado oscuro. No se inventó ni se reemplazó la imagen.
@@ -27,3 +46,24 @@ Registro de diferencias, decisiones y problemas detectados durante la migración
 - **Stock:** el botón "Guardar" usa `PATCH /api/admin/products/:id/stock` con el token.
 - **Datos de prueba:** se eliminaron `src/data/productos.js` y `src/data/mensajes.js`.
 - **Mensaje de error del catálogo:** ya no escribe `http://localhost:3000` fijo dentro del componente; ahora es un texto genérico que funciona en local y en producción.
+
+## Fase 6: limpieza y documentación
+
+- **`.gitignore` raíz:** ignora `node_modules/`, `dist/`, `.env` y `.env.*`, pero conserva los `.env.example`.
+- **README raíz:** explica requisitos, instalación, variables de entorno, cómo ejecutar las dos terminales y los endpoints.
+- **CAMBIOS.md:** incluye la tabla comparativa entre la versión vanilla y React, además de los bugs y dudas.
+- **Versión vanilla:** se movió a `_vanilla-original/` con `git mv` para conservarla como referencia.
+
+## Bugs y dudas encontrados
+
+- **Imagen del hero:** `hero.jpg` no existe en el proyecto original ni en el nuevo. El hero muestra el degradado oscuro y Vite avisa durante el build. No se inventó una imagen.
+- **Imágenes de productos:** el campo `image` está vacío en `backend/products.json`; las tarjetas muestran “Imagen próximamente”.
+- **Logo:** el HTML original apuntaba a `assets/img/logo-powersport.png`, pero el archivo disponible es `imagen logo-powersport.jpeg`. En React se usa la copia `frontend/public/img/logo-powersport.jpeg`.
+- **Backend sin carpeta `src/`:** el servidor quedó en `backend/server.js` porque así estaba el proyecto. Se mantuvo para no cambiar la lógica ni las rutas.
+- **Sin React Router:** la tienda y el admin son dos entradas de Vite (`index.html` y `admin.html`). El enlace “Admin” hace una carga completa de página, no navegación interna de React.
+- **Botón “Ver producto”:** conserva el `window.alert` original. Se puede cambiar por un modal en una mejora futura, pero no se cambió la lógica.
+- **Live Server:** la carpeta `_vanilla-original/` conserva la versión anterior y no forma parte de la app React. Para probar la migración usa `http://localhost:5173`.
+- **CORS:** en desarrollo el backend acepta `http://localhost:5173`. Si abres la app como `127.0.0.1`, el navegador puede bloquear las peticiones.
+- **Token del admin:** dura 2 horas. Si vence, el panel vuelve al login y muestra “Tu sesión terminó. Ingresa de nuevo.”.
+- **Versión vanilla:** los archivos antiguos se movieron a `_vanilla-original/` con `git mv` para conservarlos como referencia. La app React no los importa ni los incluye en el build.
+- **Secretos:** los archivos `.env` están ignorados por Git y no se muestran en la documentación.

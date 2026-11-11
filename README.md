@@ -72,8 +72,8 @@ Copia `backend/.env.example` como `backend/.env` y completa:
 | `ADMIN_PASSWORD` | Contraseña del panel de administración |
 | `JWT_SECRET` | Frase larga para firmar el token de sesión |
 | `CORS_ORIGIN` | Origen permitido, por ejemplo `http://localhost:5173` |
-| `GEMINI_API_KEY` | Se usará en la fase del chatbot |
-| `GEMINI_MODEL` | Modelo de Gemini, por ejemplo `gemini-2.0-flash` |
+| `GEMINI_API_KEY` | Clave de Google AI Studio para el chatbot. Solo se usa en el backend |
+| `GEMINI_MODEL` | Modelo de Gemini, por defecto `gemini-2.0-flash` |
 
 ### `frontend/.env`
 
@@ -147,6 +147,7 @@ La carpeta `_vanilla-original/` conserva la tienda y el admin anteriores en HTML
 |---|---|---|
 | `GET` | `/api/products` | Lista los productos |
 | `POST` | `/api/contact` | Guarda un mensaje de contacto |
+| `POST` | `/api/chat` | Envía una pregunta al chatbot de Gemini |
 | `POST` | `/api/admin/login` | Inicia sesión y devuelve un token |
 | `GET` | `/api/admin/messages` | Lista los mensajes (requiere token) |
 | `PATCH` | `/api/admin/products/:id/stock` | Actualiza el stock (requiere token) |
@@ -157,11 +158,27 @@ Los endpoints del administrador esperan el encabezado:
 Authorization: Bearer <token>
 ```
 
+El chatbot recibe un mensaje y, opcionalmente, el historial reciente de la conversación:
+
+```json
+{
+  "message": "¿Qué proteína me recomiendas?",
+  "history": [
+    { "role": "user", "content": "Hola" },
+    { "role": "assistant", "content": "¡Hola! ¿En qué puedo ayudarte?" }
+  ]
+}
+```
+
+La clave de Gemini se usa únicamente dentro del backend y nunca se envía al navegador.
+
 ## Notas
 
 - Al iniciar el backend, si la base de datos está vacía se cargan los 7 productos de `backend/products.json`.
 - Las imágenes de los productos están vacías, por eso las tarjetas muestran “Imagen próximamente”.
 - La imagen `hero.jpg` no existe en el repositorio; el hero muestra el degradado oscuro.
 - El token de administración se guarda en `sessionStorage` con la clave `ps_token`.
-- El chatbot y el despliegue en Netlify/Render quedan pendientes.
+- El chatbot está en el botón flotante de la tienda. Consulta el catálogo actual y no debe inventar precios ni stock.
+- Si falta `GEMINI_API_KEY`, el chatbot muestra un aviso y no bloquea el resto de la página.
+- El despliegue en Netlify/Render queda pendiente.
 - La carpeta `_vanilla-original/` no forma parte del build ni del despliegue.

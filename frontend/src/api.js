@@ -37,6 +37,13 @@ export function enviarMensajeContacto(datos) {
   });
 }
 
+export function enviarMensajeChat(mensaje, historial = []) {
+  return peticion("/api/chat", {
+    method: "POST",
+    body: JSON.stringify({ message: mensaje, history: historial }),
+  });
+}
+
 export function iniciarSesion(credenciales) {
   return peticion("/api/admin/login", {
     method: "POST",

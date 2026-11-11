@@ -5,6 +5,7 @@ import Products from "./components/Products";
 import About from "./components/About";
 import ContactForm from "./components/ContactForm";
 import Footer from "./components/Footer";
+import Chatbot from "./components/Chatbot";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <ContactForm />
       </main>
       <Footer />
+      <Chatbot />
     </>
   );
 }

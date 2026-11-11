@@ -14,6 +14,8 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const MONGODB_URI = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/powersport";
 const { JWT_SECRET, ADMIN_USER, ADMIN_PASSWORD } = process.env;
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+const GEMINI_MODEL = process.env.GEMINI_MODEL || "gemini-2.0-flash";
 
 if (!JWT_SECRET || !ADMIN_USER || !ADMIN_PASSWORD) {
   console.error("Falta configurar JWT_SECRET, ADMIN_USER y ADMIN_PASSWORD en el archivo .env");
@@ -51,6 +53,144 @@ app.post("/api/contact", async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "No se pudo guardar tu mensaje. Intenta de nuevo." });
+  }
+});
+
+// ---------- Chatbot con Gemini ----------
+const CATEGORIAS = {
+  proteina: "Proteínas",
+  creatina: "Creatinas",
+  preentreno: "Pre-entrenos",
+};
+
+function limitarTexto(valor, maximo) {
+  return typeof valor === "string" ? valor.trim().slice(0, maximo) : "";
+}
+
+async function obtenerContextoProductos() {
+  const productos = await Product.find()
+    .select("name brand description price stock category")
+    .lean();
+
+  if (!productos.length) {
+    return "Todavía no hay productos registrados.";
+  }
+
+  const formatoPrecio = new Intl.NumberFormat("es-CO", {
+    style: "currency",
+    currency: "COP",
+    maximumFractionDigits: 0,
+  });
+
+  return productos
+    .map((producto) => {
+      const categoria = CATEGORIAS[producto.category] || producto.category;
+      const estado = producto.stock > 0 ? `${producto.stock} unidades` : "agotado";
+      return `- ${producto.name} (${producto.brand}) | ${categoria} | ${formatoPrecio.format(producto.price)} | ${estado} | ${producto.description}`;
+    })
+    .join("\n");
+}
+
+function construirInstruccion(productos) {
+  return `Eres el asistente virtual de PowerSport, una tienda de suplementos deportivos.
+
+Responde siempre en español, con un tono amable, claro y breve (máximo 120 palabras).
+Usa únicamente la información de la tienda y del catálogo que aparece abajo. No inventes productos, precios, stock ni promociones.
+Si no tienes la información, dilo y recomienda usar el formulario de contacto de la página o revisar la sección de productos.
+No des diagnósticos, tratamientos ni consejos médicos. Si te preguntan por salud, recomienda consultar a un profesional.
+No proceses pagos ni pidas datos personales, contraseñas o información sensible.
+Para comprar o resolver un pedido, indica que escriba por el formulario de contacto.
+
+Catálogo actual:
+${productos}`;
+}
+
+app.post("/api/chat", async (req, res) => {
+  const mensaje = limitarTexto(req.body?.message, 500);
+
+  if (mensaje.length < 2) {
+    return res.status(400).json({ error: "Escribe una pregunta un poco más larga." });
+  }
+
+  if (!GEMINI_API_KEY) {
+    return res.status(503).json({
+      error: "El chatbot no está configurado. Falta GEMINI_API_KEY en el backend.",
+    });
+  }
+
+  const historial = Array.isArray(req.body?.history) ? req.body.history.slice(-8) : [];
+  const contents = [];
+
+  for (const item of historial) {
+    if (!item || !["user", "assistant"].includes(item.role)) continue;
+
+    const texto = limitarTexto(item.content, 1000);
+    if (!texto) continue;
+
+    contents.push({
+      role: item.role === "assistant" ? "model" : "user",
+      parts: [{ text: texto }],
+    });
+  }
+
+  contents.push({ role: "user", parts: [{ text: mensaje }] });
+
+  try {
+    const contexto = await obtenerContextoProductos();
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(GEMINI_MODEL)}:generateContent?key=${encodeURIComponent(GEMINI_API_KEY)}`;
+
+    const respuestaGemini = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        systemInstruction: { parts: [{ text: construirInstruccion(contexto) }] },
+        contents,
+        generationConfig: { temperature: 0.4, maxOutputTokens: 350 },
+      }),
+      signal: AbortSignal.timeout(25000),
+    });
+
+    const data = await respuestaGemini.json().catch(() => ({}));
+
+    if (!respuestaGemini.ok) {
+      console.error(
+        "Gemini respondió con error:",
+        respuestaGemini.status,
+        data?.error?.message || "",
+      );
+
+      if (respuestaGemini.status === 429) {
+        return res.status(429).json({
+          error: "El asistente está recibiendo muchas solicitudes. Intenta de nuevo en un momento.",
+        });
+      }
+
+      return res.status(502).json({
+        error: "El asistente no está disponible en este momento. Intenta de nuevo más tarde.",
+      });
+    }
+
+    const respuesta = (data.candidates?.[0]?.content?.parts || [])
+      .map((part) => part.text || "")
+      .join("")
+      .trim();
+
+    if (!respuesta) {
+      console.error(
+        "Gemini no devolvió texto. Motivo:",
+        data?.promptFeedback?.blockReason || "sin motivo",
+      );
+      return res.status(502).json({
+        error: "No pude generar una respuesta. Intenta reformular tu pregunta.",
+      });
+    }
+
+    res.json({ reply: respuesta });
+  } catch (error) {
+    console.error("Error al consultar Gemini:", error.message);
+    res.status(502).json({
+      error: "No se pudo conectar con el asistente. Intenta de nuevo más tarde.",
+    });
   }
 });
 

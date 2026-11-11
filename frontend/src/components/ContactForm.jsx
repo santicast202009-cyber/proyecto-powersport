@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { enviarMensajeContacto } from "../api";
 
 function ContactForm() {
   // useState guarda lo que la persona escribe en cada campo.
@@ -8,6 +9,7 @@ function ContactForm() {
     message: "",
   });
   const [estado, setEstado] = useState({ texto: "", error: false });
+  const [enviando, setEnviando] = useState(false);
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -18,20 +20,15 @@ function ContactForm() {
     setEstado({ texto, error });
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
 
     const nombre = formulario.name.trim();
     const correo = formulario.email.trim();
     const mensaje = formulario.message.trim();
 
-    if (!nombre) {
-      mostrarEstado("Escribe tu nombre.", true);
-      return;
-    }
-
-    if (!correo) {
-      mostrarEstado("Escribe tu correo.", true);
+    if (nombre.length < 2 || nombre.length > 80) {
+      mostrarEstado("El nombre debe tener entre 2 y 80 caracteres.", true);
       return;
     }
 
@@ -40,16 +37,31 @@ function ContactForm() {
       return;
     }
 
-    if (!mensaje) {
-      mostrarEstado("Escribe un mensaje.", true);
+    if (mensaje.length < 10 || mensaje.length > 1000) {
+      mostrarEstado("El mensaje debe tener entre 10 y 1000 caracteres.", true);
       return;
     }
 
-    // El envío real a la API se conecta en la Fase 5.
-    mostrarEstado(
-      "Datos válidos. El envío se conectará a la API en la Fase 5.",
-      false,
-    );
+    setEnviando(true);
+
+    try {
+      const data = await enviarMensajeContacto({
+        name: nombre,
+        email: correo,
+        message: mensaje,
+      });
+      mostrarEstado(data.message, false);
+      setFormulario({ name: "", email: "", message: "" });
+    } catch (error) {
+      mostrarEstado(
+        error.status
+          ? error.message
+          : "No se pudo enviar el mensaje. Intenta de nuevo más tarde.",
+        true,
+      );
+    } finally {
+      setEnviando(false);
+    }
   }
 
   return (
@@ -106,8 +118,8 @@ function ContactForm() {
           />
         </div>
 
-        <button className="buy-button" type="submit">
-          Enviar mensaje
+        <button className="buy-button" type="submit" disabled={enviando}>
+          {enviando ? "Enviando..." : "Enviar mensaje"}
         </button>
       </form>
 

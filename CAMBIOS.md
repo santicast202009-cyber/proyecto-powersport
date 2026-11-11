@@ -17,3 +17,13 @@ Registro de diferencias, decisiones y problemas detectados durante la migración
 - **Formulario de contacto:** los campos son controlados y tienen validación local (nombre, correo y mensaje). El envío real a la API se conecta en la Fase 5.
 - **Login del admin:** los campos son controlados y validan que no estén vacíos. El inicio de sesión real y el manejo del token se conectan en la Fase 5.
 - **Stock del admin:** el campo numérico es controlado. El botón "Guardar" todavía no llama a la API; eso se conecta en la Fase 5.
+
+## Fase 5: conexión con la API
+
+- **`src/api.js`:** concentra las llamadas a la API con `VITE_API_URL`: productos, contacto, login, mensajes y stock. Si la respuesta no es correcta, lanza un error con el mensaje del backend.
+- **Catálogo:** `Products.jsx` carga los productos con `useEffect`, muestra "Cargando productos..." y un mensaje de error si la API no responde.
+- **Contacto:** el formulario envía los datos a `POST /api/contact`, muestra el mensaje del backend y limpia los campos al terminar.
+- **Administración:** el login usa `POST /api/admin/login`, guarda el token en `sessionStorage` con la clave `ps_token` y el panel carga mensajes y productos desde la API. El cierre de sesión borra el token.
+- **Stock:** el botón "Guardar" usa `PATCH /api/admin/products/:id/stock` con el token.
+- **Datos de prueba:** se eliminaron `src/data/productos.js` y `src/data/mensajes.js`.
+- **Mensaje de error del catálogo:** ya no escribe `http://localhost:3000` fijo dentro del componente; ahora es un texto genérico que funciona en local y en producción.

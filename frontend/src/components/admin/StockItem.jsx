@@ -1,7 +1,17 @@
 import { useState } from "react";
 
-function StockItem({ producto }) {
+function StockItem({ producto, onGuardar }) {
   const [stock, setStock] = useState(producto.stock);
+  const [guardando, setGuardando] = useState(false);
+
+  async function handleGuardar() {
+    setGuardando(true);
+    try {
+      await onGuardar(producto._id, Number(stock));
+    } finally {
+      setGuardando(false);
+    }
+  }
 
   return (
     <div className="admin-item admin-stock">
@@ -18,8 +28,13 @@ function StockItem({ producto }) {
         aria-label={`Stock de ${producto.name}`}
       />
 
-      <button type="button" className="buy-button">
-        Guardar
+      <button
+        type="button"
+        className="buy-button"
+        onClick={handleGuardar}
+        disabled={guardando}
+      >
+        {guardando ? "Guardando..." : "Guardar"}
       </button>
     </div>
   );

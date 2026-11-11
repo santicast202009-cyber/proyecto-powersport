@@ -1,18 +1,23 @@
 import { useState } from "react";
+import { iniciarSesion } from "../../api";
 
-function AdminLogin() {
+function AdminLogin({ onLogin, mensaje }) {
   const [credenciales, setCredenciales] = useState({
     user: "",
     password: "",
   });
-  const [estado, setEstado] = useState({ texto: "", error: false });
+  const [estado, setEstado] = useState(() => ({
+    texto: mensaje || "",
+    error: Boolean(mensaje),
+  }));
+  const [enviando, setEnviando] = useState(false);
 
   function handleChange(event) {
     const { name, value } = event.target;
     setCredenciales((actual) => ({ ...actual, [name]: value }));
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
 
     if (!credenciales.user.trim()) {
@@ -20,16 +25,29 @@ function AdminLogin() {
       return;
     }
 
-    if (!credenciales.password.trim()) {
+    if (!credenciales.password) {
       setEstado({ texto: "Escribe la contraseña.", error: true });
       return;
     }
 
-    // El inicio de sesión real se conecta a la API en la Fase 5.
-    setEstado({
-      texto: "Datos válidos. El inicio de sesión se conectará a la API en la Fase 5.",
-      error: false,
-    });
+    setEnviando(true);
+
+    try {
+      const data = await iniciarSesion({
+        user: credenciales.user.trim(),
+        password: credenciales.password,
+      });
+      onLogin(data.token);
+    } catch (error) {
+      setEstado({
+        texto: error.status
+          ? error.message
+          : "No se pudo conectar con la API. ¿Está encendido el backend?",
+        error: true,
+      });
+    } finally {
+      setEnviando(false);
+    }
   }
 
   return (
@@ -66,8 +84,8 @@ function AdminLogin() {
           />
         </div>
 
-        <button className="buy-button" type="submit">
-          Ingresar
+        <button className="buy-button" type="submit" disabled={enviando}>
+          {enviando ? "Ingresando..." : "Ingresar"}
         </button>
       </form>
 

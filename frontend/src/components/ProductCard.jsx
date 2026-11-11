@@ -25,7 +25,15 @@ function ProductCard({ producto }) {
         <p className="stock">
           {producto.stock > 0 ? `Disponible: ${producto.stock}` : "Agotado"}
         </p>
-        <button className="buy-button" type="button">
+        <button
+          className="buy-button"
+          type="button"
+          onClick={() =>
+            window.alert(
+              `${producto.name}\nMarca: ${producto.brand}\nPrecio de demostración: ${formatPrice(producto.price)}`,
+            )
+          }
+        >
           Ver producto
         </button>
       </div>

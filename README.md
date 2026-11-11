@@ -73,7 +73,7 @@ Copia `backend/.env.example` como `backend/.env` y completa:
 | `JWT_SECRET` | Frase larga para firmar el token de sesión |
 | `CORS_ORIGIN` | Origen permitido, por ejemplo `http://localhost:5173` |
 | `GEMINI_API_KEY` | Clave de Google AI Studio para el chatbot. Solo se usa en el backend |
-| `GEMINI_MODEL` | Modelo de Gemini, por defecto `gemini-2.0-flash` |
+| `GEMINI_MODEL` | Modelo de Gemini, por defecto `gemini-3.6-flash` |
 
 ### `frontend/.env`
 

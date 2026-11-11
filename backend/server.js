@@ -15,7 +15,7 @@ const PORT = process.env.PORT || 3000;
 const MONGODB_URI = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/powersport";
 const { JWT_SECRET, ADMIN_USER, ADMIN_PASSWORD } = process.env;
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
-const GEMINI_MODEL = process.env.GEMINI_MODEL || "gemini-2.0-flash";
+const GEMINI_MODEL = process.env.GEMINI_MODEL || "gemini-3.6-flash";
 
 if (!JWT_SECRET || !ADMIN_USER || !ADMIN_PASSWORD) {
   console.error("Falta configurar JWT_SECRET, ADMIN_USER y ADMIN_PASSWORD en el archivo .env");
@@ -82,20 +82,34 @@ async function obtenerContextoProductos() {
     maximumFractionDigits: 0,
   });
 
-  return productos
-    .map((producto) => {
-      const categoria = CATEGORIAS[producto.category] || producto.category;
-      const estado = producto.stock > 0 ? `${producto.stock} unidades` : "agotado";
-      return `- ${producto.name} (${producto.brand}) | ${categoria} | ${formatoPrecio.format(producto.price)} | ${estado} | ${producto.description}`;
-    })
-    .join("\n");
+  const lineas = productos.map((producto) => {
+    const categoria = CATEGORIAS[producto.category] || producto.category;
+    const estado =
+      producto.stock > 0
+        ? `DISPONIBLE (${producto.stock} unidades)`
+        : "AGOTADO";
+    return `- ${producto.name} (${producto.brand}) | ${categoria} | ${formatoPrecio.format(producto.price)} | Estado: ${estado} | ${producto.description}`;
+  });
+
+  const agotados = productos
+    .filter((producto) => producto.stock === 0)
+    .map((producto) => producto.name);
+
+  const resumenAgotados = agotados.length
+    ? `\nProductos agotados actualmente: ${agotados.join(", ")}.`
+    : "\nNo hay productos agotados actualmente.";
+
+  return `${lineas.join("\n")}${resumenAgotados}`;
 }
 
 function construirInstruccion(productos) {
   return `Eres el asistente virtual de PowerSport, una tienda de suplementos deportivos.
 
 Responde siempre en español, con un tono amable, claro y breve (máximo 120 palabras).
+Responde en texto plano, sin Markdown: no uses **, *, # ni tablas. Si necesitas una lista, usa guiones.
 Usa únicamente la información de la tienda y del catálogo que aparece abajo. No inventes productos, precios, stock ni promociones.
+No recomiendes marcas ni productos que no aparezcan en el catálogo.
+Para preguntas de disponibilidad, revisa el campo "Estado" de cada producto. Los que dicen "AGOTADO" no están disponibles. No afirmes que todos están disponibles sin revisar la lista de agotados.
 Si no tienes la información, dilo y recomienda usar el formulario de contacto de la página o revisar la sección de productos.
 No des diagnósticos, tratamientos ni consejos médicos. Si te preguntan por salud, recomienda consultar a un profesional.
 No proceses pagos ni pidas datos personales, contraseñas o información sensible.
@@ -145,7 +159,7 @@ app.post("/api/chat", async (req, res) => {
       body: JSON.stringify({
         systemInstruction: { parts: [{ text: construirInstruccion(contexto) }] },
         contents,
-        generationConfig: { temperature: 0.4, maxOutputTokens: 350 },
+        generationConfig: { temperature: 0.4, maxOutputTokens: 2048 },
       }),
       signal: AbortSignal.timeout(25000),
     });
@@ -158,6 +172,12 @@ app.post("/api/chat", async (req, res) => {
         respuestaGemini.status,
         data?.error?.message || "",
       );
+
+      if (respuestaGemini.status === 404) {
+        return res.status(502).json({
+          error: "El modelo de Gemini configurado ya no está disponible. Revisa GEMINI_MODEL en el backend.",
+        });
+      }
 
       if (respuestaGemini.status === 429) {
         return res.status(429).json({

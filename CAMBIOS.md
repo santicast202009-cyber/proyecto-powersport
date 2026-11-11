@@ -57,11 +57,11 @@ Registro de diferencias, decisiones y problemas detectados durante la migración
 
 ## Fase 7: chatbot con Gemini
 
-- **Backend:** `POST /api/chat` valida el mensaje, arma el historial reciente y consulta el catálogo actual para responder con precios y stock reales.
+- **Backend:** `POST /api/chat` valida el mensaje, arma el historial reciente y consulta el catálogo actual para responder con precios y stock reales. El catálogo se envía con `Estado: DISPONIBLE` o `Estado: AGOTADO` y un resumen de productos agotados.
 - **Seguridad:** `GEMINI_API_KEY` se lee solo en el backend; React nunca la recibe. Si falta, el endpoint responde 503 con un mensaje claro.
 - **Frontend:** `Chatbot.jsx` es un botón flotante con panel, mensajes, input controlado, estado de "Escribiendo..." y errores. La llamada está en `api.js` como `enviarMensajeChat`.
 - **Historial:** se envían como máximo los últimos 8 mensajes para que el asistente recuerde el contexto sin hacer peticiones gigantes.
-- **Modelo:** se configura con `GEMINI_MODEL`; por defecto `gemini-2.0-flash`.
+- **Modelo:** se configura con `GEMINI_MODEL`; por defecto `gemini-3.6-flash`. Se usa `maxOutputTokens: 2048` porque los modelos Gemini 3.x consumen tokens en razonamiento y con un límite bajo la respuesta se cortaba.
 - **Sin SDK:** se usa `fetch` nativo de Node para no agregar dependencias al backend.
 
 ## Bugs y dudas encontrados
@@ -77,7 +77,7 @@ Registro de diferencias, decisiones y problemas detectados durante la migración
 - **Token del admin:** dura 2 horas. Si vence, el panel vuelve al login y muestra “Tu sesión terminó. Ingresa de nuevo.”.
 - **Versión vanilla:** los archivos antiguos se movieron a `_vanilla-original/` con `git mv` para conservarlos como referencia. La app React no los importa ni los incluye en el build.
 - **Chatbot sin clave:** si `GEMINI_API_KEY` está vacía, el backend responde 503 y el chat muestra “El chatbot no está configurado...”. El resto de la tienda sigue funcionando.
-- **Prueba real pendiente:** en el entorno de desarrollo no había `GEMINI_API_KEY`, así que se verificó el endpoint sin clave y la compilación del frontend, pero falta probar una respuesta real de Gemini.
-- **Modelo de Gemini:** si Google retira `gemini-2.0-flash`, hay que cambiar `GEMINI_MODEL` en `backend/.env` por un modelo disponible.
+- **Prueba real:** cuando se configuró `GEMINI_API_KEY`, se probó el endpoint con `gemini-3.6-flash`. Respondió con productos, precios y stock del catálogo. La primera prueba salió cortada porque `maxOutputTokens` era 350; se subió a 2048 y la respuesta llegó completa.
+- **Modelo de Gemini:** `gemini-2.0-flash` fue retirado por Google. Se cambió a `gemini-3.6-flash`, que respondió correctamente en las pruebas. En ese momento `gemini-3.8-flash` y `gemini-3.7-flash` estaban saturados. Si el modelo vuelve a cambiar, hay que actualizar `GEMINI_MODEL` en `backend/.env`.
 - **Límite de peticiones:** el endpoint del chat no tiene rate limit. Para producción se puede agregar un límite por IP.
 - **Secretos:** los archivos `.env` están ignorados por Git y no se muestran en la documentación. La clave de Gemini nunca se envía al navegador.

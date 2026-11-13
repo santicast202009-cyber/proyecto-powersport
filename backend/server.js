@@ -22,7 +22,10 @@ if (!JWT_SECRET || !ADMIN_USER || !ADMIN_PASSWORD) {
   process.exit(1);
 }
 
-const allowedOrigins = (process.env.CORS_ORIGIN || "http://localhost:5173,http://localhost:5500")
+const allowedOrigins = (
+  process.env.CORS_ORIGIN ||
+  "http://localhost:5173,http://127.0.0.1:5173,http://localhost:5174,http://127.0.0.1:5174,http://localhost:4173,http://127.0.0.1:4173,http://localhost:5500,http://127.0.0.1:5500"
+)
   .split(",")
   .map((origin) => origin.trim())
   .filter(Boolean);
@@ -161,7 +164,7 @@ app.post("/api/chat", async (req, res) => {
         contents,
         generationConfig: { temperature: 0.4, maxOutputTokens: 2048 },
       }),
-      signal: AbortSignal.timeout(25000),
+      signal: AbortSignal.timeout(60000),
     });
 
     const data = await respuestaGemini.json().catch(() => ({}));

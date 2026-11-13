@@ -107,13 +107,23 @@ button {
 }
 
 
+.logo {
+
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+
+}
+
+
 .logo img {
 
     height: 54px;
-    width: 54px;
+    width: auto;
 
-    border-radius: 70px;
-    object-fit: cover;
+    border-radius: 10px;
+    object-fit: contain;
+    display: block;
 
 }
 
@@ -587,11 +597,25 @@ footer {
 }
 
 
+.footer-logo {
+
+    display: flex;
+    justify-content: center;
+
+}
+
+
 .footer-logo img {
 
-    width: 130px;
+    width: 120px;
+    height: auto;
 
-    margin: 0 auto 15px;
+    display: block;
+    object-fit: contain;
+    border-radius: 14px;
+
+    margin: 0 0 15px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
 
 }
 
@@ -864,7 +888,8 @@ footer > p {
 
     .logo img {
 
-        width: 120px;
+        height: 64px;
+        width: auto;
 
     }
 
@@ -1195,6 +1220,10 @@ footer > p {
         width: calc(100vw - 24px);
         height: min(520px, calc(100vh - 100px));
         bottom: 70px;
+    }
+
+    .footer-logo img {
+        width: 100px;
     }
 }
 
